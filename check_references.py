@@ -3,13 +3,15 @@ import csv
 import sys
 from collections import Counter
 
+
 def read_csv(fh, delimiter, quotechar):
     if sys.version_info.major < 3:
         csvreader = csv.reader(fh, delimiter=bytes(delimiter),
                                quotechar=bytes(quotechar))
+        rows = [[cell.decode('utf-8') for cell in row] for row in csvreader]
     else:
         csvreader = csv.reader(fh, delimiter=delimiter, quotechar=quotechar)
-    rows = [row for row in csvreader]
+        rows = [row for row in csvreader]
     return rows
 
 
@@ -18,10 +20,14 @@ def load_csv(filename):
         rows = read_csv(f, ',', '"')
     return rows
 
+
 def load_grounding_map(filename):
     gm_rows = load_csv(filename)
+    gm_tuples = []
+    check_rows(gm_rows, 7, filename)
     g_map = {}
     for row in gm_rows:
+        gm_tuples.append(tuple(row))
         key = row[0]
         db_refs = {'TEXT': key}
         keys = [entry for entry in row[1::2] if entry != '']
@@ -35,21 +41,49 @@ def load_grounding_map(filename):
                 g_map[key] = db_refs
             else:
                 g_map[key] = None
-    return g_map
+    return g_map, tuple(gm_tuples)
+
+
+def check_file_rows(filename, row_length):
+    with open(filename) as f:
+        rows = read_csv(f, ',', '"')
+    check_rows(rows, row_length, filename)
+
+
+def check_rows(rows, row_length, filename):
+    for ix, row in enumerate(rows):
+        if len(row) != row_length:
+            print("ERROR: Line %d in file %s has %d columns, should be %d" %
+                  ((ix + 1), filename, len(row), row_length))
+
 
 def load_entity_list(filename):
     with open(filename) as f:
         rows = read_csv(f, ',', '"')
+    check_rows(rows, 1, filename)
     entities = [row[0] for row in rows]
     return entities
+
 
 def load_relationships(filename):
     relationships = []
     with open(filename) as f:
         rows = read_csv(f, ',', '"')
-        for row in rows:
-            relationships.append(((row[0], row[1]), row[2], (row[3], row[4])))
+    check_rows(rows, 5, filename)
+    for row in rows:
+        relationships.append(((row[0], row[1]), row[2], (row[3], row[4])))
     return relationships
+
+
+def load_equivalences(filename):
+    equivalences = []
+    with open(filename) as f:
+        rows = read_csv(f, ',', '"')
+    check_rows(rows, 3, filename)
+    for row in rows:
+        equivalences.append((row[0], row[1], row[2]))
+    return equivalences
+
 
 def update_id_prefixes(filename):
     gm_rows = load_csv(filename)
@@ -73,6 +107,7 @@ def update_id_prefixes(filename):
         updated_rows.append(updated_row)
     return updated_rows
 
+
 def pubchem_and_chebi(db_refs):
     pubchem_id = db_refs.get('PUBCHEM')
     chebi_id = db_refs.get('CHEBI')
@@ -82,30 +117,41 @@ def pubchem_and_chebi(db_refs):
         return 'pubchem_missing'
     return None
 
-if __name__ == '__main__':
-    signal_error = False
-    # Check the entity list for duplicates
-    entities = load_entity_list('entities.csv')
-    ent_counter = Counter(entities)
-    print("-- Checking for duplicate entities --")
+
+def check_duplicates(entries, entry_label):
+    ent_counter = Counter(entries)
+    print("-- Checking for duplicate %s --" % entry_label)
     found_duplicates = False
     for ent, freq in ent_counter.items():
         if freq > 1:
-            print("ERROR: Duplicate entries for %s in entity list." % ent)
+            print("ERROR: Duplicate %s in %s." % (str(ent), entry_label))
             found_duplicates = True
-    if not found_duplicates:
-        print("OK! No duplicates found.")
-
     print()
-    print("-- Checking for undeclared Bioentities IDs in grounding map --")
-    # Load the grounding map
-    gm = load_grounding_map('grounding_map.csv')
-    # Look through grounding map and find all instances with an 'BE' db
+    return found_duplicates
+
+
+if __name__ == '__main__':
+    signal_error = False
+    entities = load_entity_list('entities.csv')
+    relationships = load_relationships('relations.csv')
+    equivalences = load_equivalences('equivalences.csv')
+    gm, gm_tuples = load_grounding_map('grounding_map.csv')
+    check_file_rows('gene_prefixes.csv', 3)
+
+    for entries, entry_label in ((entities, 'entities'),
+                                 (relationships, 'relationships'),
+                                 (equivalences, 'equivalences'),
+                                 (gm_tuples, 'groundings')):
+        if check_duplicates(entries, entry_label):
+            signal_error = True
+
+    print("-- Checking for undeclared FamPlex IDs in grounding map --")
+    # Look through grounding map and find all instances with an FPLX db key
     entities_missing_gm = []
     for text, db_refs in gm.items():
         if db_refs is not None:
             for db_key, db_id in db_refs.items():
-                if db_key == 'BE' and db_id not in entities:
+                if db_key == 'FPLX' and db_id not in entities:
                     entities_missing_gm.append(db_id)
                     print("ERROR: ID %s referenced in grounding map "
                           "is not in entities list." % db_id)
@@ -120,22 +166,23 @@ if __name__ == '__main__':
             p_and_c = pubchem_and_chebi(db_refs)
             if p_and_c == 'chebi_missing':
                 chebi_id_missing.append(db_refs['PUBCHEM'])
-                print("WARNING: %s has PUBCHEM ID but no CHEBI ID." % text)
+                print("WARNING: %s has PUBCHEM ID (%s) but no CHEBI ID."
+                      % (text, db_refs['PUBCHEM']))
             if p_and_c == 'pubchem_missing':
                 pubchem_id_missing.append(db_refs['CHEBI'])
-                print("WARNING: %s has CHEBI ID but no PUBCHEM ID." % text)
+                print("WARNING: %s has CHEBI ID (%s) but no PUBCHEM ID." %
+                      (text, db_refs['CHEBI']))
 
     print()
-    print("-- Checking for undeclared Bioentities IDs in relationships file --")
+    print("-- Checking for undeclared FamPlex IDs in relationships file --")
     # Load the relationships
-    relationships = load_relationships('relations.csv')
     # Check the relationships for consistency with entities
     entities_missing_rel = []
     for subj, rel, obj in relationships:
         for term in (subj, obj):
             term_ns = term[0]
             term_id = term[1]
-            if term_ns == 'BE' and term_id not in entities:
+            if term_ns == 'FPLX' and term_id not in entities:
                 entities_missing_rel.append(term_id)
                 print("ERROR: ID %s referenced in relations "
                       "is not in entities list." % term_id)
@@ -145,7 +192,7 @@ if __name__ == '__main__':
     for ix, (subj, rel, obj) in enumerate(relationships):
         for term in (subj, obj):
             term_ns = term[0]
-            if term_ns not in ('BE', 'HGNC', 'UP'):
+            if term_ns not in ('FPLX', 'HGNC', 'UP'):
                 print("ERROR: row %d: Invalid namespace in relations.csv: %s" %
                       (ix+1, term_ns))
                 signal_error = True
@@ -209,6 +256,46 @@ if __name__ == '__main__':
     except IOError:
         pass
 
+    print()
+    print("-- Checking for FamPlexes whose relationships are undefined  --")
+    # Check the relationships for consistency with entities
+    rel_missing_entities = []
+    for ent in entities:
+        found = False
+        for subj, rel, obj in relationships:
+            subj_ns = subj[0]
+            subj_id = subj[1]
+            obj_ns = obj[0]
+            obj_id = obj[1]
+            if subj_ns == 'FPLX' and subj_id == ent:
+                found = True
+                break
+            if obj_ns == 'FPLX' and obj_id == ent:
+                found = True
+                break
+        if not found:
+            rel_missing_entities.append(ent)
+            print("WARNING: ID %s has no known relations." % ent)
+
+    print()
+    print("-- Checking for non-existent FamPlexes in equivalences  --")
+    entities_missing_eq = []
+    for eq_ns, eq_id, be_id in equivalences:
+        if be_id not in entities:
+            signal_error = True
+            entities_missing_eq.append(be_id)
+            print("ERROR: ID %s referenced in equivalences "
+                  "is not in entities list." % be_id)
+    print()
+    print("-- Checking for duplicate equivalences --")
+    equiv_counter = Counter(equivalences)
+    duplicate_eq = [item for item, count in equiv_counter.items()
+                    if count > 1]
+    if duplicate_eq:
+        print("ERROR: Duplicate equivalences found:")
+        for dup in duplicate_eq:
+            print(dup)
+
     # This check requires the requests package to be installed
     try:
         import requests
@@ -229,27 +316,6 @@ if __name__ == '__main__':
                                   "not a valid PUBCHEM ID." % db_id)
     except ImportError:
         pass
-
-    print()
-    print("-- Checking for Bioentities whose relationships are undefined  --")
-    # Check the relationships for consistency with entities
-    rel_missing_entities = []
-    for ent in entities:
-        found = False
-        for subj, rel, obj in relationships:
-            subj_ns = subj[0]
-            subj_id = subj[1]
-            obj_ns = obj[0]
-            obj_id = obj[1]
-            if subj_ns == 'BE' and subj_id == ent:
-                found = True
-                break
-            if obj_ns == 'BE' and obj_id == ent:
-                found = True
-                break
-        if not found:
-            rel_missing_entities.append(ent)
-            print("ERROR: ID %s has no known relations." % ent)
 
     if signal_error:
         sys.exit(1)

@@ -1,11 +1,23 @@
-# Bioentities
+# FamPlex [![Build Status](https://travis-ci.org/sorgerlab/famplex.svg?branch=master)](https://travis-ci.org/sorgerlab/famplex)
 
-*Bioentities* is a collection of resources for grounding biological entities
+*FamPlex* is a collection of resources for grounding biological entities
 from text and describing their hierarchical relationships. Resources were
 developed by manual curation for use by natural language processing and
 biological modeling teams in the [DARPA Big
 Mechanism](http://www.darpa.mil/program/big-mechanism) and [Communicating with
 Computers](http://www.darpa.mil/program/communicating-with-computers) programs.
+
+The open access publication describing FamPlex is available here:
+
+* John A. Bachman, Benjamin M. Gyori and Peter K. Sorger, [FamPlex: a resource
+for entity recognition and relationship resolution of human protein families
+and complexes in biomedical text mining](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2211-5). (2018) BMC Bioinformatics 19(1):248
+
+
+Note: FamPlex used to be called Bioentities, and was renamed to better reflect
+the focus of the resource on protein families, complexes, and their lexical
+synonyms.
+
 The repository contains the following files:
 
 * ```relations.csv```. Defines membership of specific genes/proteins in
@@ -14,8 +26,11 @@ PIK3C represents the class of catalytic subunits of PI3K; and ```PIK3C partof
 PI3K```, where PI3K represents a named complex consisting of a catalytic and
 regulatory subunit.
 
+* ```equivalences.csv```. Defines mappings between outside namespaces and
+the FamPlex namespace.
+
 * ```entities.csv```. A registry of the families and complexes defined in the
-  Bioentities namespace.
+  FamPlex namespace.
 
 * ```grounding_map.csv```. Explicit mapping of text strings to identifiers in
   biological databases.
@@ -25,11 +40,12 @@ regulatory subunit.
 * ```check_references.py```. A script to check the integrity and completeness
   of the cross-references among the various files.
 
-## Entities and Relations
 
-*Bioentities* contains resources for defining the relationships between
+## Entities, Relations and Equivalences
+
+*FamPlex* contains resources for defining the relationships between
 genes/proteins and their membership in families and named complexes. Entities
-defined within the Bioentities namespace are listed in the ```entities.csv```
+defined within the FamPlex namespace are listed in the ```entities.csv```
 file. Cross-referencing the entries among the various files maintains
 consistency and prevents errors.
 
@@ -45,10 +61,15 @@ relationships, including sub-families (families within families) and complexes
 consisting of families of related subunits (e.g., PI3K, NF-kB).
 
 The ```relations.csv``` file consists of five columns: (1) the namespace for
-the subject (e.g., ```HGNC``` for gene names, ```UP``` for Uniprot, or ```BE```
-for the Bioentities namespace), (2) the identifier for the subject, (3) the
-relationship (```isa``` or ```partof```), (4) the namespace for the object, and
-(5) the identifier for the object.
+the subject (e.g., ```HGNC``` for gene names, ```UP``` for Uniprot, or
+```FPLX``` for the FamPlex namespace), (2) the identifier for the subject,
+(3) the relationship (```isa``` or ```partof```), (4) the namespace for the
+object, and (5) the identifier for the object.
+
+The ```equivalences.csv``` file consists of three columns (1) the namespace of
+an outsite entity (e.g. ```BEL```, ```PFAM```),
+(2) the identifier of the outside entity in the namespace given in the
+first column, and (3) the equivalent entity in the ```FPLX``` namespace.
 
 ## Grounding Map
 
@@ -76,16 +97,9 @@ Entities are grounded to the following databases:
   [MeSH](http://www.ncbi.nlm.nih.gov/mesh)
 
 * Protein families and named complexes: grounded to entities defined within
-  the Bioentities repository in the ```entities.csv``` and ```relations.csv```
+  the FamPlex repository in the ```entities.csv``` and ```relations.csv```
   files, and to identifiers in [PFAM](http://pfam.xfam.org/)
   and [Interpro](https://www.ebi.ac.uk/interpro/) when possible.
-
-**Note: Some text strings in the map have no grounding.** This was originally
-used to identify entities that represent parsing errors and that should not be
-included in downstream output. For example, "MAP" a degenerate extraction that
-could signify many entities, including MAP kinase, MAP kinase inhibitor, MAP
-kinase kinase, etc. However, these empty entries could be used differently
-depending on the downstream application.
 
 ## Gene prefixes
 
@@ -142,12 +156,15 @@ be incorporated by a parser. The categories are as follows:
 
 ## Contributing
 
-Contributions are welcome! If making additions or revisions to the CSV files
+Contributions are welcome! Please submit pull requests via the main
+sorgerlab/famplex repository: https://github.com/sorgerlab/famplex
+
+If making additions or revisions to the CSV files
 take care to handle quotations and newlines correctly. This allows diffs to be
 handled correctly so changes can be reviewed. Please submit updates via pull
 requests on Github.
 
-The CSV files in the Bioentities repo are set up to be edited natively using
+The CSV files in the FamPlex repo are set up to be edited natively using
 Microsoft Excel. The CSV files in the repo have Windows line terminators
 ('\r\n'), and are not ragged (i.e., missing entries in a row are padded out
 with empty strings to reach the full width of the longest row).
