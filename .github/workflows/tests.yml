@@ -1,0 +1,52 @@
+name: Check resource validity and run tests
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        sudo apt-get install libstdc++6 python3-dev graphviz libgraphviz-dev pkg-config
+        pip install future requests pygraphviz
+        pip install mypy pytest-cov
+        pip install .[all]
+        git clone https://github.com/sorgerlab/indra.git $HOME/indra
+        pip install bel_resources==0.0.3
+    - name: Check references and export generation
+      run: |
+        export PYTHONPATH=$PYTHONPATH:$HOME/indra
+        python check_references.py
+        python export/relations_graph.py
+        python export/obo.py
+        python export/hgnc_ids.py
+        python export/belns.py
+        python export/reach_bioresources.py
+    - name: Check that exports are up to date
+      run: |
+        export belns_diff=$(git diff -U0 export/famplex.belns | egrep "^[\+-][^\+-]")
+        export belns=$(echo "$belns_diff" | egrep -v "^[\+-](VersionString|CreatedDateTime)")
+        export obo_diff=$(git diff -U0 export/famplex.obo | egrep "^[\+-][^\+-]")
+        export obo=$(echo "$obo_diff" | egrep -v "^[\+-]date")
+        export hgnc=$(git diff -U0 export/hgnc_symbol_map.csv | egrep "^[\+-][^\+-]")
+        export reach=$(git diff -U0 export/famplex_groundings.tsv | egrep "^[\+-][^\+-]")
+        if [[ ! -z $belns ]] || [[ ! -z $obo ]] || [[ ! -z $hgnc ]] || [[ ! -z $reach ]]; then
+          echo "FAIL exports have not been updated";
+          echo $belns;
+          echo $obo;
+          echo $hgnc;
+          echo $reach;
+          exit 1;
+        fi
+    - name: Run package unit tests
+      run: |
+        mypy famplex/api.py famplex/graph.py famplex/load.py
+        cd $HOME
+        pytest --cov=famplex --pyargs famplex.tests

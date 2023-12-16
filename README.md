@@ -1,6 +1,6 @@
 # FamPlex [![Build Status](https://travis-ci.org/sorgerlab/famplex.svg?branch=master)](https://travis-ci.org/sorgerlab/famplex)
 
-*FamPlex* is a collection of resources for grounding biological entities
+*FamPlex* is a collection of resources for grounding protein families and complexes
 from text and describing their hierarchical relationships. Resources were
 developed by manual curation for use by natural language processing and
 biological modeling teams in the [DARPA Big
@@ -31,6 +31,10 @@ the FamPlex namespace.
 
 * ```entities.csv```. A registry of the families and complexes defined in the
   FamPlex namespace.
+
+* ```descriptions.csv```. Descriptions and citations of some entities. Contains
+  three columns: the FamPlex name, pipe separated reference CURIEs, and a 
+  textual description.
 
 * ```grounding_map.csv```. Explicit mapping of text strings to identifiers in
   biological databases.
@@ -154,6 +158,24 @@ be incorporated by a parser. The categories are as follows:
   sentence "DUSP6 silencing leads to MAPK1 phosphorylation" indicates that DUSP6
   **inhibits** MAPK1 phosphorylation. **Must be captured by the parser.**
 
+## Python Package
+
+FamPlex is available as a Python package on PyPi and can be installed with
+the command
+
+    $ pip install famplex
+
+The package provides utilities for loading resource files and working with the
+graph of FamPlex relations. If the famplex repository has been cloned instead of
+pip installed, resource files will not be directly available to the package.
+Running the command
+
+    $ python update_resources.py
+
+at the top level of the repo will copy the files to where they are needed. This
+should be run anytime the user has made changes to the top level resource files
+that they would like to be available in the package.
+
 ## Contributing
 
 Contributions are welcome! Please submit pull requests via the main
@@ -182,3 +204,6 @@ To preserve correct newlines, take the following steps:
 
 3. If editing the files on Linux, post-process files using ```unix2dos``` or a
    similar program.
+
+When you're done, run `tox` to verify the integrity of the updates you've
+made and to generate new exports.

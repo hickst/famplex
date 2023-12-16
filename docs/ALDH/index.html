@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ALDH</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link
+        rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous"
+    />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.12/c3.min.css"
+    />
+    <link
+        rel="stylesheet"
+        href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"
+    />
+
+    <!-- DataTables, see: https://datatables.net/examples/styling/bootstrap4.html-->
+    <link
+        rel="stylesheet"
+        href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"
+    />
+    <style type="text/css">
+        h1, h2 {
+            margin-top: 35px;
+        }
+    </style>
+  </head>
+  <body data-spy="scroll" data-target="#toc">
+    
+    
+    <div class="container">
+        <h1>ALDH</h1>
+        
+        <p>
+            An enzyme that oxidizes an aldehyde in the presence of NAD+ and water to an acid and NADH. This enzyme was formerly classified as EC 1.1.1.70.
+            
+            (<a href="https://bioregistry.io/mesh:D000444">mesh:D000444</a>)
+            
+        </p>
+        
+
+        <h2>Cross-references</h2>
+        
+            <ul>
+                
+                    <li>
+                        
+                            <a href="https://bioregistry.io/ECCODE:1.2.1.3">
+                                ECCODE:1.2.1.3
+                            </a>
+                        
+                        
+                        - Aldehyde dehydrogenase (NAD(+))
+                        
+                    </li>
+                
+                    <li>
+                        
+                            <a href="https://bioregistry.io/BEL:ALDH Family">
+                                BEL:ALDH Family
+                            </a>
+                        
+                        
+                    </li>
+                
+                    <li>
+                        
+                            <a href="https://bioregistry.io/SFAM:F0015">
+                                SFAM:F0015
+                            </a>
+                        
+                        
+                    </li>
+                
+                    <li>
+                        
+                            <a href="https://bioregistry.io/MESH:D000444">
+                                MESH:D000444
+                            </a>
+                        
+                        
+                        - Aldehyde Dehydrogenase
+                        
+                    </li>
+                
+                    <li>
+                        
+                            <a href="https://bioregistry.io/NCIT:C118481">
+                                NCIT:C118481
+                            </a>
+                        
+                        
+                    </li>
+                
+            </ul>
+        
+
+        <h2>Synonyms</h2>
+        
+            <table class="table table-striped table-hover" id="table-synonyms">
+                <thead>
+                <tr>
+                    <td>Synonym</td>
+                    <td>Reference</td>
+                    <td>Specificity</td>
+                </tr>
+                </thead>
+                <tbody>
+                
+                    <tr>
+                        <td>Aldehyde dehydrogenase</td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            
+                            Exact
+                            
+                        </td>
+                    </tr>
+                
+                    <tr>
+                        <td>aldehyde dehydrogenase</td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            
+                            Exact
+                            
+                        </td>
+                    </tr>
+                
+                    <tr>
+                        <td>aldehyde dehydrogenase (NAD+)</td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            
+                            Exact
+                            
+                        </td>
+                    </tr>
+                
+                    <tr>
+                        <td>ALDH</td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            
+                            Exact
+                            
+                        </td>
+                    </tr>
+                
+                </tbody>
+            </table>
+        
+
+        <h2>Incoming Relations</h2>
+        
+            <table class="table table-striped table-hover" id="table-incoming">
+                <thead>
+                <tr>
+                    <td>Identifier</td>
+                    <td>Name</td>
+                    <td>Relation</td>
+                </tr>
+                </thead>
+                <tbody>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:403">
+                                    HGNC:403
+                                </a>
+                            
+                        </td>
+                        <td>ALDH3A2</td>
+                        <td>isa</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:405">
+                                    HGNC:405
+                                </a>
+                            
+                        </td>
+                        <td>ALDH3A1</td>
+                        <td>isa</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:15472">
+                                    HGNC:15472
+                                </a>
+                            
+                        </td>
+                        <td>ALDH1A2</td>
+                        <td>isa</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:409">
+                                    HGNC:409
+                                </a>
+                            
+                        </td>
+                        <td>ALDH1A3</td>
+                        <td>isa</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:402">
+                                    HGNC:402
+                                </a>
+                            
+                        </td>
+                        <td>ALDH1A1</td>
+                        <td>isa</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:412">
+                                    HGNC:412
+                                </a>
+                            
+                        </td>
+                        <td>ALDH9A1</td>
+                        <td>isa</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:408">
+                                    HGNC:408
+                                </a>
+                            
+                        </td>
+                        <td>ALDH5A1</td>
+                        <td>isa</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:404">
+                                    HGNC:404
+                                </a>
+                            
+                        </td>
+                        <td>ALDH2</td>
+                        <td>isa</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:410">
+                                    HGNC:410
+                                </a>
+                            
+                        </td>
+                        <td>ALDH3B1</td>
+                        <td>isa</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:877">
+                                    HGNC:877
+                                </a>
+                            
+                        </td>
+                        <td>ALDH7A1</td>
+                        <td>isa</td>
+                    </tr>
+                
+                </tbody>
+            </table>
+        
+
+        <h2>Outgoing Relations</h2>
+        
+            <span>None available.</span>
+        
+    </div>
+
+
+    
+    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+
+    <!-- DataTables, see: https://datatables.net/examples/styling/bootstrap4.html-->
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.12/c3.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#table-synonyms").DataTable();
+            $("#table-incoming").DataTable();
+            $("#table-outgoing").DataTable();
+        })
+    </script>
+
+  </body>
+</html>
+

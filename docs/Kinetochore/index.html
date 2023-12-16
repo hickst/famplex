@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Kinetochore</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link
+        rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous"
+    />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.12/c3.min.css"
+    />
+    <link
+        rel="stylesheet"
+        href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"
+    />
+
+    <!-- DataTables, see: https://datatables.net/examples/styling/bootstrap4.html-->
+    <link
+        rel="stylesheet"
+        href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"
+    />
+    <style type="text/css">
+        h1, h2 {
+            margin-top: 35px;
+        }
+    </style>
+  </head>
+  <body data-spy="scroll" data-target="#toc">
+    
+    
+    <div class="container">
+        <h1>Kinetochore</h1>
+        
+        <p>
+            Large multiprotein complexes that bind the centromeres of the chromosomes to the microtubules of the mitotic spindle during metaphase in the cell cycle.
+            
+            (<a href="https://bioregistry.io/mesh:D018386">mesh:D018386</a>)
+            
+        </p>
+        
+
+        <h2>Cross-references</h2>
+        
+            <ul>
+                
+                    <li>
+                        
+                            <a href="https://bioregistry.io/SCOMP:C0070">
+                                SCOMP:C0070
+                            </a>
+                        
+                        
+                    </li>
+                
+                    <li>
+                        
+                            <a href="https://bioregistry.io/BEL:Kinetochore Complex">
+                                BEL:Kinetochore Complex
+                            </a>
+                        
+                        
+                    </li>
+                
+                    <li>
+                        
+                            <a href="https://bioregistry.io/MESH:D018386">
+                                MESH:D018386
+                            </a>
+                        
+                        
+                        - Kinetochores
+                        
+                    </li>
+                
+                    <li>
+                        
+                            <a href="https://bioregistry.io/GO:GO:0000776">
+                                GO:GO:0000776
+                            </a>
+                        
+                        
+                        - kinetochore
+                        
+                    </li>
+                
+            </ul>
+        
+
+        <h2>Synonyms</h2>
+        
+            <table class="table table-striped table-hover" id="table-synonyms">
+                <thead>
+                <tr>
+                    <td>Synonym</td>
+                    <td>Reference</td>
+                    <td>Specificity</td>
+                </tr>
+                </thead>
+                <tbody>
+                
+                    <tr>
+                        <td>kinetochores</td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            
+                            Exact
+                            
+                        </td>
+                    </tr>
+                
+                    <tr>
+                        <td>kinetochore</td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            
+                            Exact
+                            
+                        </td>
+                    </tr>
+                
+                    <tr>
+                        <td>kinetochore complex</td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            
+                            Exact
+                            
+                        </td>
+                    </tr>
+                
+                </tbody>
+            </table>
+        
+
+        <h2>Incoming Relations</h2>
+        
+            <table class="table table-striped table-hover" id="table-incoming">
+                <thead>
+                <tr>
+                    <td>Identifier</td>
+                    <td>Name</td>
+                    <td>Relation</td>
+                </tr>
+                </thead>
+                <tbody>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:1151">
+                                    HGNC:1151
+                                </a>
+                            
+                        </td>
+                        <td>BUB3</td>
+                        <td>partof</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:8574">
+                                    HGNC:8574
+                                </a>
+                            
+                        </td>
+                        <td>PAFAH1B1</td>
+                        <td>partof</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:17268">
+                                    HGNC:17268
+                                </a>
+                            
+                        </td>
+                        <td>CENPH</td>
+                        <td>partof</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:11111">
+                                    HGNC:11111
+                                </a>
+                            
+                        </td>
+                        <td>SMC1A</td>
+                        <td>partof</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:16987">
+                                    HGNC:16987
+                                </a>
+                            
+                        </td>
+                        <td>SUGT1</td>
+                        <td>partof</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:6391">
+                                    HGNC:6391
+                                </a>
+                            
+                        </td>
+                        <td>KIF22</td>
+                        <td>partof</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:2712">
+                                    HGNC:2712
+                                </a>
+                            
+                        </td>
+                        <td>DCTN2</td>
+                        <td>partof</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:6763">
+                                    HGNC:6763
+                                </a>
+                            
+                        </td>
+                        <td>MAD2L1</td>
+                        <td>partof</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:1856">
+                                    HGNC:1856
+                                </a>
+                            
+                        </td>
+                        <td>CENPE</td>
+                        <td>partof</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:9509">
+                                    HGNC:9509
+                                </a>
+                            
+                        </td>
+                        <td>PSEN2</td>
+                        <td>partof</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:1149">
+                                    HGNC:1149
+                                </a>
+                            
+                        </td>
+                        <td>BUB1B</td>
+                        <td>partof</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:13194">
+                                    HGNC:13194
+                                </a>
+                            
+                        </td>
+                        <td>ZW10</td>
+                        <td>partof</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:1857">
+                                    HGNC:1857
+                                </a>
+                            
+                        </td>
+                        <td>CENPF</td>
+                        <td>partof</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:1148">
+                                    HGNC:1148
+                                </a>
+                            
+                        </td>
+                        <td>BUB1</td>
+                        <td>partof</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:11124">
+                                    HGNC:11124
+                                </a>
+                            
+                        </td>
+                        <td>SUMO3</td>
+                        <td>partof</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:1854">
+                                    HGNC:1854
+                                </a>
+                            
+                        </td>
+                        <td>CENPC</td>
+                        <td>partof</td>
+                    </tr>
+                
+                    <tr>
+                        <td>
+                            
+                                <a href="https://bioregistry.io/HGNC:9508">
+                                    HGNC:9508
+                                </a>
+                            
+                        </td>
+                        <td>PSEN1</td>
+                        <td>partof</td>
+                    </tr>
+                
+                </tbody>
+            </table>
+        
+
+        <h2>Outgoing Relations</h2>
+        
+            <span>None available.</span>
+        
+    </div>
+
+
+    
+    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+
+    <!-- DataTables, see: https://datatables.net/examples/styling/bootstrap4.html-->
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.12/c3.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#table-synonyms").DataTable();
+            $("#table-incoming").DataTable();
+            $("#table-outgoing").DataTable();
+        })
+    </script>
+
+  </body>
+</html>
+
